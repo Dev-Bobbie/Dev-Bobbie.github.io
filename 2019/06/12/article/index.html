@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io/blob/master/images/1888909-6b953b11bddfae15.png">
 <meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io/blob/master/images/1888909-4d3f0bec471b5dfc.png">
 <meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io/blob/master/images/1888909-2a4a68b3d96ee4b3.png">
-<meta property="og:updated_time" content="2019-06-12T15:50:53.000Z">
+<meta property="og:updated_time" content="2019-06-12T15:58:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ADB命令大全">
 <meta name="twitter:description" content="ADB是什么 Adb的全称为Android Debug Bridge：android调试桥梁，下图为Android官方对adb的介绍：   可以看出，Android的初衷是用adb这样的一个工具来协助开发人员在开发android应用的过程中更快更好的调试apk，因此adb具有安装卸载apk、拷贝推送文件、查看设备硬件信息、查看应用程序占用资源、在设备执行shell命令等功能； 我们可以在andro">
@@ -170,9 +170,8 @@
 <li>运行在pc端的adb client：<br>命令行程序”adb”用于从shell或脚本中运行adb命令。首先，“adb”程序尝试定位主机上的ADB服务器，如果找不到ADB服务器，“adb”程序自动启动一个ADB服务器。接下来，当设备的adbd和pc端的adb server建立连接后，adb client就可以向ADB servcer发送服务请求；</li>
 <li>运行在pc端的adb server：<br>ADB Server是运行在主机上的一个后台进程。它的作用在于检测USB端口感知设备的连接和拔除，以及模拟器实例的启动或停止，ADB Server还需要将adb client的请求通过usb或者tcp的方式发送到对应的adbd上；</li>
 <li>运行在设备端的常驻进程adb demon (adbd)：<br>程序“adbd”作为一个后台进程在Android设备或模拟器系统中运行。它的作用是连接ADB服务器，并且为运行在主机上的客户端提供一些服务； </li>
-<li><img src="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io/blob/master/images/1888909-4d3f0bec471b5dfc.png" alt="1888909-4d3f0bec471b5dfc"></li>
-<li><img src="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io/blob/master/images/1888909-2a4a68b3d96ee4b3.png" alt="1888909-2a4a68b3d96ee4b3"></li>
 </ol>
+<p><img src="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io/blob/master/images/1888909-4d3f0bec471b5dfc.png" alt="1888909-4d3f0bec471b5dfc"><br><img src="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io/blob/master/images/1888909-2a4a68b3d96ee4b3.png" alt="1888909-2a4a68b3d96ee4b3"></p>
 <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><hr>
 <p>adb能做什么?答案是所有能对手机的操作都能用adb实现。也就是说如果你玩的6，你就是触摸屏完全坏了，显示屏完全坏了，就只是给你一个主板，你照样能完成你要做的动作。当然在一般场景不推荐这样做，效率优先嘛。</p>
 <p>接下来的内容是转自github上一位大牛的<a href="https://github.com/mzlogin/awesome-adb">博客</a>，如有侵权请告知，立即删除；<br>后期</p>
