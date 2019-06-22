@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="###使用Docker Swarm搭建分布式爬虫集群 在爬虫开发过程中，你肯定遇到过需要把爬虫部署在多个服务器上面的情况。此时你是怎么操作的呢？逐一SSH登录每个服务器，使用git拉下代码，然后运行？代码修改了，于是又要一个服务器一个服务器登录上去依次更新？ 有时候爬虫只需要在一个服务器上面运行，有时候需要在200个服务器上面运行。你是怎么快速切换的呢？一个服务器一个服务器登录上去开关？或者聪明一">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>docker-swarm | Hexo</title>
+  <meta name="description" content="###使用Docker Swarm搭建分布式爬虫集群 在爬虫开发过程中，你肯定遇到过需要把爬虫部署在多个服务器上面的情况。此时你是怎么操作的呢？逐一SSH登录每个服务器，使用git拉下代码，然后运行？代码修改了，于是又要一个服务器一个服务器登录上去依次更新？ 有时候爬虫只需要在一个服务器上面运行，有时候需要在200个服务器上面运行。你是怎么快速切换的呢？一个服务器一个服务器登录上去开关？或者聪明一">
 <meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker-swarm">
@@ -38,143 +50,318 @@
 <meta name="twitter:title" content="docker-swarm">
 <meta name="twitter:description" content="###使用Docker Swarm搭建分布式爬虫集群 在爬虫开发过程中，你肯定遇到过需要把爬虫部署在多个服务器上面的情况。此时你是怎么操作的呢？逐一SSH登录每个服务器，使用git拉下代码，然后运行？代码修改了，于是又要一个服务器一个服务器登录上去依次更新？ 有时候爬虫只需要在一个服务器上面运行，有时候需要在200个服务器上面运行。你是怎么快速切换的呢？一个服务器一个服务器登录上去开关？或者聪明一">
 <meta name="twitter:image" content="https://kingname-1257411235.cos.ap-chengdu.myqcloud.com/docker_swarm_2.png">
-    
-    
-        
-          
-              <link rel="shortcut icon" href="/images/favicon.ico">
-          
-        
-        
-          
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-          
-        
-        
-          
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-          
-        
-    
-    <!-- title -->
-    <title>docker-swarm</title>
-    <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- persian styles -->
-    
-      <link rel="stylesheet" href="/css/rtl.css">
-    
-    <!-- rss -->
-    
-    
-      <link rel="alternate" href="/atom.xml" title="Bobbie" type="application/atom+xml">
-    
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Bobbie" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
 </head>
 
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
-    </span>
-    <br>
-    <span id="actions">
-      <ul>
-        
-        
-        <li><a class="icon" href="/2019/06/12/article/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&text=docker-swarm"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&is_video=false&description=docker-swarm"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=docker-swarm&body=Check out this article: https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&name=docker-swarm&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-</ul>
 
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Swarm是什么"><span class="toc-number">1.</span> <span class="toc-text">Docker Swarm是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在Master上安装Docker"><span class="toc-number">2.1.</span> <span class="toc-text">在Master上安装Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建Manager节点"><span class="toc-number">2.2.</span> <span class="toc-text">创建Manager节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建私有源（可选）"><span class="toc-number">2.3.</span> <span class="toc-text">创建私有源（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#允许docker使用可信任的http私有源（可选）"><span class="toc-number">2.4.</span> <span class="toc-text">允许docker使用可信任的http私有源（可选）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建子节点初始化脚本"><span class="toc-number">3.</span> <span class="toc-text">创建子节点初始化脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建测试程序"><span class="toc-number">4.</span> <span class="toc-text">创建测试程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#搭建测试Redis"><span class="toc-number">4.1.</span> <span class="toc-text">搭建测试Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写测试程序"><span class="toc-number">4.2.</span> <span class="toc-text">编写测试程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写Dockerfile"><span class="toc-number">4.3.</span> <span class="toc-text">编写Dockerfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构建镜像"><span class="toc-number">4.4.</span> <span class="toc-text">构建镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传镜像到私有源"><span class="toc-number">4.5.</span> <span class="toc-text">上传镜像到私有源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建服务"><span class="toc-number">5.</span> <span class="toc-text">创建服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看节点Log"><span class="toc-number">6.</span> <span class="toc-text">查看节点Log</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#横向扩展"><span class="toc-number">7.</span> <span class="toc-text">横向扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同时查看多个容器的日志"><span class="toc-number">8.</span> <span class="toc-text">同时查看多个容器的日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新爬虫"><span class="toc-number">9.</span> <span class="toc-text">更新爬虫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#你可以用Docker-Swarm做更多事情"><span class="toc-number">10.</span> <span class="toc-text">你可以用Docker Swarm做更多事情</span></a></li></ol>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
     </div>
-  </span>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle="tooltip" data-placement="top"><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
 </div>
 
     
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
     
-    <h1 class="posttitle" itemprop="name headline">
-        docker-swarm
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Bobbie</span>
-      </span>
       
-    <div class="postdate">
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
       
-        <time datetime="2019-06-15T00:32:27.000Z" itemprop="datePublished">2019-06-15</time>
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/学习笔记/" style="font-size: 13px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
         
-      
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Docker/">Docker</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/06/15/docker-swarm/" class="title">docker-swarm</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-06-15T00:32:27.000Z" itemprop="datePublished">2019-06-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Android/">Android</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/06/12/article/" class="title">ADB命令大全</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-06-12T15:32:08.000Z" itemprop="datePublished">2019-06-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
     </div>
-
-
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/Docker/">Docker</a>
-    </div>
-
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
-    </div>
-
-
-    </div>
-  </header>
+  </div>
   
 
-  <div class="content" itemprop="articleBody">
-    <p>###使用Docker Swarm搭建分布式爬虫集群</p>
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-docker-swarm" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      docker-swarm
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/06/15/docker-swarm/" class="article-date">
+	  <time datetime="2019-06-15T00:32:27.000Z" itemprop="datePublished">2019-06-15</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/学习笔记/">学习笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/06/15/docker-swarm/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>###使用Docker Swarm搭建分布式爬虫集群</p>
 <p>在爬虫开发过程中，你肯定遇到过需要把爬虫部署在多个服务器上面的情况。此时你是怎么操作的呢？逐一SSH登录每个服务器，使用git拉下代码，然后运行？代码修改了，于是又要一个服务器一个服务器登录上去依次更新？</p>
 <p>有时候爬虫只需要在一个服务器上面运行，有时候需要在200个服务器上面运行。你是怎么快速切换的呢？一个服务器一个服务器登录上去开关？或者聪明一点，在Redis里面设置一个可以修改的标记，只有标记对应的服务器上面的爬虫运行？</p>
 <p>A爬虫已经在所有服务器上面部署了，现在又做了一个B爬虫，你是不是又得依次登录每个服务器再一次部署？</p>
@@ -328,124 +515,218 @@
 <h2 id="你可以用Docker-Swarm做更多事情"><a href="#你可以用Docker-Swarm做更多事情" class="headerlink" title="你可以用Docker Swarm做更多事情"></a>你可以用Docker Swarm做更多事情</h2><p>本文使用的是一个模拟爬虫的例子，但是显然，任何可以批量运行的程序都能够用Docker Swarm来运行，无论你用Redis还是Celery来通信，无论你是否需要通信，只要能批量运行，就能用Docker Swarm。</p>
 <p>在同一个Swarm集群里面，可以运行多个不同的服务，各个服务之间互不影响。真正做到了搭建一次Docker Swarm集群，然后就再也不用管了，以后的所有操作你都只需要在Manager节点所在的这个服务器上面运行。</p>
 
-  </div>
-</article>
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-    <div id="vcomments" class="blog-post-comments"></div>
-    <script>
-        new Valine({
-            el: '#vcomments',
-            visitor: true,
-            appId: 'WXoq96sHU7vcbgNKw3gzAm2K-gzGzoHsz',
-            appKey: 'rahoDKROYsseW6To4BdSedc8',
-            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
-            avatar: 'robohash'
-        })
-    </script>
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
+      
     </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/" title="docker-swarm" target="_blank" rel="external">https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Swarm是什么"><span class="toc-number">1.</span> <span class="toc-text">Docker Swarm是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在Master上安装Docker"><span class="toc-number">2.1.</span> <span class="toc-text">在Master上安装Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建Manager节点"><span class="toc-number">2.2.</span> <span class="toc-text">创建Manager节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建私有源（可选）"><span class="toc-number">2.3.</span> <span class="toc-text">创建私有源（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#允许docker使用可信任的http私有源（可选）"><span class="toc-number">2.4.</span> <span class="toc-text">允许docker使用可信任的http私有源（可选）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建子节点初始化脚本"><span class="toc-number">3.</span> <span class="toc-text">创建子节点初始化脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建测试程序"><span class="toc-number">4.</span> <span class="toc-text">创建测试程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#搭建测试Redis"><span class="toc-number">4.1.</span> <span class="toc-text">搭建测试Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写测试程序"><span class="toc-number">4.2.</span> <span class="toc-text">编写测试程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写Dockerfile"><span class="toc-number">4.3.</span> <span class="toc-text">编写Dockerfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构建镜像"><span class="toc-number">4.4.</span> <span class="toc-text">构建镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传镜像到私有源"><span class="toc-number">4.5.</span> <span class="toc-text">上传镜像到私有源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建服务"><span class="toc-number">5.</span> <span class="toc-text">创建服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看节点Log"><span class="toc-number">6.</span> <span class="toc-text">查看节点Log</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#横向扩展"><span class="toc-number">7.</span> <span class="toc-text">横向扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同时查看多个容器的日志"><span class="toc-number">8.</span> <span class="toc-text">同时查看多个容器的日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新爬虫"><span class="toc-number">9.</span> <span class="toc-text">更新爬虫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#你可以用Docker-Swarm做更多事情"><span class="toc-number">10.</span> <span class="toc-text">你可以用Docker Swarm做更多事情</span></a></li></ol>
-    </div>
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&text=docker-swarm"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&is_video=false&description=docker-swarm"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=docker-swarm&body=Check out this article: https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&title=docker-swarm"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/06/15/docker-swarm/&name=docker-swarm&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">昵称</span><small class="ml-1x">Web Developer &amp; Designer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
   </div>
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy; 2019 bobbie
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/categories/">categories</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-        
-      </ul>
-    </nav>
-  </div>
-</footer>
 
     </div>
-    <!-- styles -->
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
 
-    <!-- jquery -->
-<script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
-<script src="/js/main.js"></script>
-<!-- search -->
 
-<!-- Google Analytics -->
+  
+</div>
 
-<!-- Baidu Analytics -->
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2019/06/12/article/" title="ADB命令大全"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan">
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan">
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <script type="text/javascript">
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?2e6da3c375c8a87f5b664cea6d4cb29c";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
 
-<!-- Disqus Comments -->
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle="tooltip" data-placement="top"><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle="tooltip" data-placement="top"><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle="tooltip" data-placement="top"><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
 
 
 </body>
