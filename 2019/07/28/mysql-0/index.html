@@ -26,18 +26,18 @@
 <meta property="og:site_name" content="Bobbie">
 <meta property="og:description" content="简介 主要知识点包括：能够与mysql建立连接，创建数据库、表，分别从图形界面与脚本界面两个方面讲解 相关的知识点包括：E-R关系模型，数据库的3范式，mysql中数据字段的类型，字段约束 数据库的操作主要包括： 数据库的操作，包括创建、删除 表的操作，包括创建、修改、删除 数据的操作，包括增加、修改、删除、查询，简称crud   学生表结构： id 名称 性别 地址 生日   科目表结构： id">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/images/link.png">
-<meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/images/createdb.png">
-<meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/images/createtable.png">
-<meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/images/data.png">
-<meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/images/ok.png">
-<meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/images/quit.png">
-<meta property="og:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/images/r.png">
-<meta property="og:updated_time" content="2019-07-27T22:35:06.000Z">
+<meta property="og:image" content="https://github.com/2019/07/28/mysql-0/link.png">
+<meta property="og:image" content="https://github.com/2019/07/28/mysql-0/createdb.png">
+<meta property="og:image" content="https://github.com/2019/07/28/mysql-0/createtable.png">
+<meta property="og:image" content="https://github.com/2019/07/28/mysql-0/data.png">
+<meta property="og:image" content="https://github.com/2019/07/28/mysql-0/ok.png">
+<meta property="og:image" content="https://github.com/2019/07/28/mysql-0/quit.png">
+<meta property="og:image" content="https://github.com/2019/07/28/mysql-0/r.png">
+<meta property="og:updated_time" content="2019-07-27T22:47:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql">
 <meta name="twitter:description" content="简介 主要知识点包括：能够与mysql建立连接，创建数据库、表，分别从图形界面与脚本界面两个方面讲解 相关的知识点包括：E-R关系模型，数据库的3范式，mysql中数据字段的类型，字段约束 数据库的操作主要包括： 数据库的操作，包括创建、删除 表的操作，包括创建、修改、删除 数据的操作，包括增加、修改、删除、查询，简称crud   学生表结构： id 名称 性别 地址 生日   科目表结构： id">
-<meta name="twitter:image" content="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/images/link.png">
+<meta name="twitter:image" content="https://github.com/2019/07/28/mysql-0/link.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://github.com/Dev-Bobbie/Dev-Bobbie.github.io.git/2019/07/28/mysql-0/index.html">
   
@@ -451,7 +451,7 @@
 <li>下发windows的navicat</li>
 <li>点击“连接”弹出窗口，按照提示填写连接信息，如下图</li>
 </ul>
-<p><img src="images/link.png" alt="连接"></p>
+<img src="/2019/07/28/mysql-0/link.png" title="link">
 <ul>
 <li>连接成功后，会在连接名称下面显示出当前的数据库</li>
 <li>双击选中数据库，就可以编辑此数据库</li>
@@ -460,7 +460,7 @@
 <h1 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h1><ul>
 <li>在连接的名称上右击，选择“新建数据库”，弹出窗口，并按提示填写</li>
 </ul>
-<p><img src="images/createdb.png" alt="创建数据库"></p>
+<img src="/2019/07/28/mysql-0/createdb.png" title="createdb">
 <ul>
 <li>在数据库上右击，选择“删除数据库”可以完成删除操作</li>
 </ul>
@@ -469,7 +469,7 @@
 <li>一个实体对应一张表，用于存储特定结构的数据</li>
 <li>点击“新建表”，弹出窗口，按提示填写信息</li>
 </ul>
-<p><img src="images/createtable.png" alt="创建表"></p>
+<img src="/2019/07/28/mysql-0/createtable.png" title="createtable">
 <ul>
 <li>主键的名称一般为id，设置为int型，无符号数，自动增长，非空</li>
 <li>自动增长表示由mysql系统负责维护这个字段的值，不需要手动维护，所以不用关心这个字段的具体值</li>
@@ -480,7 +480,7 @@
 <h1 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h1><ul>
 <li>表创建成功后，可以在右侧看到，双击表打开新窗口，如下图</li>
 </ul>
-<p><img src="images/data.png" alt="数据操作"></p>
+<img src="/2019/07/28/mysql-0/data.png" title="data">
 <ul>
 <li>在此窗口中可以增加、修改、删除数据</li>
 </ul>
@@ -498,7 +498,7 @@
 <ul>
 <li>连接成功后如下图</li>
 </ul>
-<p><img src="images/ok.png" alt="连接成功"></p>
+<img src="/2019/07/28/mysql-0/ok.png" title="ok">
 <ul>
 <li>退出登录</li>
 </ul>
@@ -506,7 +506,7 @@
 <ul>
 <li>退出成功后如下图</li>
 </ul>
-<p><img src="images/quit.png" alt="退出"></p>
+<img src="/2019/07/28/mysql-0/quit.png" title="quit">
 <ul>
 <li>登录成功后，输入如下命令查看效果</li>
 </ul>
@@ -1064,7 +1064,7 @@
 <li>答：学生列的数据不是在这里新建的，而应该从学生表引用过来，关系也是一条数据；根据范式要求应该存储学生的编号，而不是学生的姓名等其它信息</li>
 <li>同理，科目表也是关系列，引用科目表中的数据</li>
 </ul>
-<p><img src="images/r.png" alt="关系"></p>
+<img src="/2019/07/28/mysql-0/r.png" title="r">
 <ul>
 <li>创建表的语句如下</li>
 </ul>
